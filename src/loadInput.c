@@ -74,7 +74,7 @@ void loadInput(char* inputFilePath, Input* input) {
   input->lineCount = lineCount;
 
   // Get memory to store the input.
-  input->inputLines = malloc(sizeof(char*) * input->lineCount);
+  input->inputLines = calloc(sizeof(char*), input->lineCount);
 
   // Set up intermediate array for fgets to put the current line into.
   char line[maxLineLength + 2];
