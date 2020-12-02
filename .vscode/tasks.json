@@ -8,9 +8,9 @@
 			"args": [
 				"-Wall",
 				"-g",
-				"${file}",
+				"${fileDirname}\\**.c",
 				"-o",
-				"${fileDirname}\\main.exe"
+				"${fileDirname}\\..\\build\\main.exe"
 			],
 			"group": {
 				"kind": "build",

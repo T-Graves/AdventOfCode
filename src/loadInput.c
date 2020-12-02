@@ -1,75 +1,20 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-typedef struct Input_t {
-  char* inputFilePath;
-  char** inputLines;
-  int lineCount;
-  int lineLength;
-
-  int errCode;
-  char* errMessage;
-} Input;
-
-void loadInput(char*, Input*);
-void freeInput(Input*);
-
-int main(int argc, char** argv) {
-
-  Input input;
-  loadInput("Day_01/input.txt", &input);
-
-  // @ToDo: Need to do error checking to make sure we loaded the file
-  //        and stored its values before we attempt to loop over them.
-
-  int outOne = 0;
-  for (int i = 0; i < input.lineCount; i++) {
-    int a = atoi(input.inputLines[i]);
-    for (int j = 0; j < input.lineCount; j++) {
-      int b = atoi(input.inputLines[j]);
-      if (a + b == 2020) {
-        outOne = a * b;
-      }
-    }
-  }
-
-  printf("%d\n", outOne);
-
-  int outTwo = 0;
-  for (int i = 0; i < input.lineCount; i++) {
-    int a = atoi(input.inputLines[i]);
-    for (int j = 0; j < input.lineCount; j++) {
-      int b = atoi(input.inputLines[j]);
-      for (int k = 0; k < input.lineCount; k++) {
-        int c = atoi(input.inputLines[k]);
-        if (a + b + c == 2020) {
-          outTwo = a * b * c;
-        }
-      }
-    }
-  }
-
-  printf("%d", outTwo);
-
-  freeInput(&input);
-
-  return 0;
-}
+#include "main.h"
 
 /**
  * Handle freeing all memory being used by input struct.
  */
 void freeInput(Input* input) {
-  if (input->errCode != 0) {
-    free(input->errMessage);
-  }
+  // Free error message memory.
+  free(input->errMessage);
 
+  // Free all input line memory.
   for (int i = 0; i < input->lineCount; i++) {
     free(input->inputLines[i]);
   }
 
+  // Free input line string array mem.
   free(input->inputLines);
+  // Free file path mem.
   free(input->inputFilePath);
 }
 
@@ -77,13 +22,16 @@ void freeInput(Input* input) {
  * Handle loading, parsing, and storing a file and its values into a struct.
  */
 void loadInput(char* inputFilePath, Input* input) {
+  // Store input file path in input struct. No idea if I will actually need it,
+  // but doesn't hurt to have it around, so whatever.
   input->inputFilePath = malloc(strlen(inputFilePath) + 1);
   strcpy(input->inputFilePath, inputFilePath);
 
+  // Open handle to input file in read only mode.
   FILE* fHandle = fopen(inputFilePath, "r");
 
+  // Make sure the handle opened properly.
   if (fHandle == NULL) {
-    // printf("Error opening file");
     input->errCode = 1;
     char* errMessage = "Error opening file";
     input->errMessage = malloc(strlen(errMessage) + 1);
@@ -118,25 +66,32 @@ void loadInput(char* inputFilePath, Input* input) {
     }
   } while (c != EOF);
 
+  // Reset file handle to beginning of file.
   rewind(fHandle);
 
+  // Store the max line length and total line count.
   input->lineLength = maxLineLength;
   input->lineCount = lineCount;
 
+  // Get memory to store the input.
   input->inputLines = malloc(sizeof(char*) * input->lineCount);
 
+  // Set up intermediate array for fgets to put the current line into.
   char line[maxLineLength + 2];
 
+  // Read each line of the file and store it into the inputLines array.
   int i = 0;
   while (fgets(line, maxLineLength + 2, fHandle) != NULL) {
-    // printf("Line: %s\n", line);
-    // printf("strlen: %I64d\n\n", strlen(line));
     input->inputLines[i] = malloc(maxLineLength + 2);
     strcpy(input->inputLines[i], line);
     i++;
   }
 
+  // Set error code to 0 (success I guess).
   input->errCode = 0;
+  // calloc to make sure this isn't pointing to junk data.
+  input->errMessage = calloc(sizeof(char*), 1);
 
+  // Close file handle.
   fclose(fHandle);
 }
