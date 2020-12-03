@@ -50,8 +50,13 @@ void loadInput(char* inputFilePath, Input* input) {
     // Check if it's the end of the line or file.
     if (c == '\n' || c == '\r' || c == EOF) {
 
-      // increment line counter.
-      lineCount++;
+      // Attempt to protect against trailing line breaks. Pretty sure this will
+      // cause blank lines anywhere else to be skipped, but I don't know for
+      // sure if they get read by fgets anyways.
+      if (currLineLength != 0) {
+        // increment line counter.
+        lineCount++;
+      }
 
       // Check if this current line had a longer length than the current max.
       if (maxLineLength <= currLineLength) {
