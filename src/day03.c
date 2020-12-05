@@ -128,6 +128,16 @@ int checkSlope(Input input, int xMov, int yMov) {
   int treesHit = 0;
   int currLine = 0;
   while (currLine < input.lineCount) {
+    // Skip Null or empty lines.
+    if (input.inputLines[yPos] == NULL
+      || input.inputLines[yPos][0] == '\n'
+      || input.inputLines[yPos][0] == '\r'
+      || input.inputLines[yPos][0] == ' '
+    ) {
+      currLine += yMov;
+      continue;
+    }
+
     // Check if we hit a tree.
     if (input.inputLines[yPos][xPos] == '#') {
       treesHit++;

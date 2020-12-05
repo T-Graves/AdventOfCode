@@ -53,10 +53,10 @@ void loadInput(char* inputFilePath, Input* input) {
       // Attempt to protect against trailing line breaks. Pretty sure this will
       // cause blank lines anywhere else to be skipped, but I don't know for
       // sure if they get read by fgets anyways.
-      if (currLineLength != 0) {
+      // if (currLineLength != 0) {
         // increment line counter.
         lineCount++;
-      }
+      // }
 
       // Check if this current line had a longer length than the current max.
       if (maxLineLength <= currLineLength) {
@@ -79,7 +79,7 @@ void loadInput(char* inputFilePath, Input* input) {
   input->lineCount = lineCount;
 
   // Get memory to store the input.
-  input->inputLines = calloc(sizeof(char*), input->lineCount);
+  input->inputLines = calloc(input->lineCount, sizeof(char*));
 
   // Set up intermediate array for fgets to put the current line into.
   char line[maxLineLength + 2];
@@ -87,6 +87,7 @@ void loadInput(char* inputFilePath, Input* input) {
   // Read each line of the file and store it into the inputLines array.
   int i = 0;
   while (fgets(line, maxLineLength + 2, fHandle) != NULL) {
+    // printf("%s", line);
     input->inputLines[i] = malloc(maxLineLength + 2);
     strcpy(input->inputLines[i], line);
     i++;
@@ -95,7 +96,7 @@ void loadInput(char* inputFilePath, Input* input) {
   // Set error code to 0 (success I guess).
   input->errCode = 0;
   // calloc to make sure this isn't pointing to junk data.
-  input->errMessage = calloc(sizeof(char*), 1);
+  input->errMessage = calloc(1, sizeof(char*));
 
   // Close file handle.
   fclose(fHandle);
