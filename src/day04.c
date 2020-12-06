@@ -157,17 +157,25 @@ void day04(Input input) {
   int passportCount = 0;
 
   for (int i = 0; i < input.lineCount; i++) {
+    // Don't parse null lines.
     if (input.inputLines[i] == NULL) {
       continue;
     }
-    if (input.inputLines[i][0] == ' ' || input.inputLines[i][0] == '\n' || input.inputLines[i][0] == '\r') {
+
+    // Check if this is a blank line. Blank lines separate passports.
+    if (input.inputLines[i][0] == ' '
+      || input.inputLines[i][0] == '\n'
+      || input.inputLines[i][0] == '\r') {
+
       passportCount++;
       continue;
     }
   }
 
+  // Initialize the passports list.
   Passport** passports = calloc(passportCount, sizeof(Passport*));
 
+  // Initialize all passports in the list.
   for (int i = 0; i <= passportCount; i++) {
     passports[i] = calloc(1, sizeof(Passport));
     passports[i]->byr = calloc(1, sizeof(char));
@@ -182,27 +190,46 @@ void day04(Input input) {
 
   int currPassport = 0;
   for (int i = 0; i < input.lineCount; i++) {
+    // Don't parse null lines.
     if (input.inputLines[i] == NULL) {
       continue;
     }
-    if (input.inputLines[i][0] == ' ' || input.inputLines[i][0] == '\n' || input.inputLines[i][0] == '\r') {
+
+    // Check if this is a blank line. Blank lines separate passports.
+    if (input.inputLines[i][0] == ' '
+    || input.inputLines[i][0] == '\n'
+    || input.inputLines[i][0] == '\r') {
+
       currPassport++;
       continue;
     }
 
+    // The input data is garbage and super jumbled so we need to do a bunch of
+    // annoying token splitting and looping.
+
+    // Save pointer for outer tokenization.
     char* fieldSavePtr;
-    char* valueSavePtr;
     char* token = strtok_r(input.inputLines[i], " ", &fieldSavePtr);
 
+    // Continue grabbing tokens until there are none left.
     while (token != NULL) {
+      // Grab the current token to break into key and value.
       char* field = token;
 
+      // Save pointer for inner tokenization.
+      char* valueSavePtr;
+      // Break the current field into key and value.
       char* key = strtok_r(field, ":", &valueSavePtr);
       char* value = strtok_r(NULL, ":", &valueSavePtr);
 
+      // Reallocate required memory and add value into the corresponding
+      // passport field (based on key).
       if (strcmp(key, "eyr") == 0) {
+        // Reallocate memory.
         passports[currPassport]->eyr = realloc(passports[currPassport]->eyr, strcspn(value, "\r\n") + 1);
+        // Copy the value excluding any line breaks.
         strncpy(passports[currPassport]->eyr, value, strcspn(value, "\r\n"));
+        // Add null terminator.
         passports[currPassport]->eyr[strcspn(value, "\r\n")] = '\0';
       }
       else if (strcmp(key, "iyr") == 0) {
@@ -247,6 +274,7 @@ void day04(Input input) {
 
   int validPassportsPtOne = 0;
   for (int i = 0; i <= passportCount; i++) {
+    // Make sure all fields are set other than cid.
     // Eyr validation.
     if (strcmp(passports[i]->eyr, "") == 0) {
       continue;
@@ -431,6 +459,7 @@ void day04(Input input) {
 
   printf("Part 2: %d\n", validPassportsPtTwo);
 
+  // Free all used memory.
   for (int i = 0; i < passportCount; i++) {
     free(passports[i]->byr);
     free(passports[i]->cid);
