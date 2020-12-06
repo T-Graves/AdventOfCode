@@ -157,13 +157,9 @@ void day04(Input input) {
   int passportCount = 0;
 
   for (int i = 0; i < input.lineCount; i++) {
-    // Don't parse null lines.
-    if (input.inputLines[i] == NULL) {
-      continue;
-    }
-
     // Check if this is a blank line. Blank lines separate passports.
-    if (input.inputLines[i][0] == ' '
+    if (input.inputLines[i] == NULL
+      || input.inputLines[i][0] == ' '
       || input.inputLines[i][0] == '\n'
       || input.inputLines[i][0] == '\r') {
 
@@ -190,13 +186,9 @@ void day04(Input input) {
 
   int currPassport = 0;
   for (int i = 0; i < input.lineCount; i++) {
-    // Don't parse null lines.
-    if (input.inputLines[i] == NULL) {
-      continue;
-    }
-
     // Check if this is a blank line. Blank lines separate passports.
-    if (input.inputLines[i][0] == ' '
+    if (input.inputLines[i] == NULL
+    || input.inputLines[i][0] == ' '
     || input.inputLines[i][0] == '\n'
     || input.inputLines[i][0] == '\r') {
 
