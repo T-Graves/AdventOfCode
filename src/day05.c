@@ -100,10 +100,10 @@ void day05(Input input) {
 
   for (int i = 0; i < input.lineCount; i++) {
     // Make sure we don't try to parse null or blank lines.
-    if (input.inputLines[i] == NULL) {
-      continue;
-    }
-    if (input.inputLines[i][0] == ' ' || input.inputLines[i][0] == '\n' || input.inputLines[i][0] == '\r') {
+    if (input.inputLines[i] == NULL
+      || input.inputLines[i][0] == ' '
+      || input.inputLines[i][0] == '\n'
+      || input.inputLines[i][0] == '\r') {
       continue;
     }
 

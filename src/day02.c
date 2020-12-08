@@ -64,12 +64,12 @@ void day02(Input input) {
   for (int i = 0; i < input.lineCount; i++) {
 
     // Separate input string on the ':' char.
-    char* policy = strtok(input.inputLines[i], ":");
-    char* password = (strtok(NULL, ":") + 1) + '\0';
+    char *policy = strtok(input.inputLines[i], ":");
+    char *password = (strtok(NULL, ":") + 1) + '\0';
 
     // Separate the policy string on the ' ' char.
-    char* policyValidators = strtok(policy, " ");
-    char* policyLetterString = strtok(NULL, " ");
+    char *policyValidators = strtok(policy, " ");
+    char *policyLetterString = strtok(NULL, " ");
     // Check if the policy letter string is null. This is probably a blank line.
     if (policyLetterString == NULL) {
       continue;

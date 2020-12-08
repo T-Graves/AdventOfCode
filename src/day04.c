@@ -136,21 +136,21 @@
 
 typedef struct Passport_t {
   // Expiration Year.
-  char* eyr;
+  char *eyr;
   // Issue Year.
-  char* iyr;
+  char *iyr;
   // Birth Year.
-  char* byr;
+  char *byr;
   // Eye Color.
-  char* ecl;
+  char *ecl;
   // Passport ID.
-  char* pid;
+  char *pid;
   // Hair Color.
-  char* hcl;
+  char *hcl;
   // Height.
-  char* hgt;
+  char *hgt;
   // Country ID.
-  char* cid;
+  char *cid;
 } Passport;
 
 void day04(Input input) {
@@ -169,7 +169,7 @@ void day04(Input input) {
   }
 
   // Initialize the passports list.
-  Passport** passports = calloc(passportCount, sizeof(Passport*));
+  Passport **passports = calloc(passportCount, sizeof(Passport *));
 
   // Initialize all passports in the list.
   for (int i = 0; i <= passportCount; i++) {
@@ -200,19 +200,19 @@ void day04(Input input) {
     // annoying token splitting and looping.
 
     // Save pointer for outer tokenization.
-    char* fieldSavePtr;
-    char* token = strtok_r(input.inputLines[i], " ", &fieldSavePtr);
+    char *fieldSavePtr;
+    char *token = strtok_r(input.inputLines[i], " ", &fieldSavePtr);
 
     // Continue grabbing tokens until there are none left.
     while (token != NULL) {
       // Grab the current token to break into key and value.
-      char* field = token;
+      char *field = token;
 
       // Save pointer for inner tokenization.
-      char* valueSavePtr;
+      char *valueSavePtr;
       // Break the current field into key and value.
-      char* key = strtok_r(field, ":", &valueSavePtr);
-      char* value = strtok_r(NULL, ":", &valueSavePtr);
+      char *key = strtok_r(field, ":", &valueSavePtr);
+      char *value = strtok_r(NULL, ":", &valueSavePtr);
 
       // Reallocate required memory and add value into the corresponding
       // passport field (based on key).

@@ -216,7 +216,7 @@ void day06(Input input) {
       // Loop over input line characters and check if they are in the
       // groupAnswers string. If the character is found, increment its count.
       for (int j = 0; j < strlen(input.inputLines[i]); j++){
-        char* charPos = strchr(groupAnswers[currGroup], input.inputLines[i][j]);
+        char *charPos = strchr(groupAnswers[currGroup], input.inputLines[i][j]);
         if (charPos) {
           charPos[1]++;
         }
