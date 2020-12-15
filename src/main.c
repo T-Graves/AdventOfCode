@@ -32,3 +32,16 @@ int main(int argc, char** argv) {
 
   return 0;
 }
+
+bool stol(char *str, long *val) {
+  errno = 0;
+  char *endptr;
+  *val = strtol(str, &endptr, 10);
+
+  if (errno == ERANGE || endptr == str) {
+    return false;
+  }
+  else {
+    return true;
+  }
+}

@@ -64,6 +64,8 @@ static const Puzzle puzzles[] = {
   {"day06", day06, "../assets/inputDay06.txt"},
   {"day07", day07, "../assets/inputDay07.txt"},
   {"day08", day08, "../assets/inputDay08.txt"},
+  // @ToDo: Add test data capabilities?
+  // {"day08", day08, "../assets/testdata/inputDay08Test.txt"},
   {"day09", day09, "../assets/inputDay09.txt"},
   {"day10", day10, "../assets/inputDay10.txt"},
   {"day11", day11, "../assets/inputDay11.txt"},
@@ -83,5 +85,7 @@ static const Puzzle puzzles[] = {
   {"day25", day25, "../assets/inputDay25.txt"},
   {0, 0, 0}
 };
+
+bool stol(char *str, long *val);
 
 #endif
